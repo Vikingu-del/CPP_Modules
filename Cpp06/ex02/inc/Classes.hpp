@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScalarConverter.hpp                                :+:      :+:    :+:   */
+/*   Classes.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 16:29:07 by segfault          #+#    #+#             */
-/*   Updated: 2024/03/18 11:23:16 by eseferi          ###   ########.fr       */
+/*   Created: 2024/03/18 12:14:19 by eseferi           #+#    #+#             */
+/*   Updated: 2024/03/18 14:35:03 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <iostream>
-#include <string>
-#include <cstdlib>
 
-class ScalarConverter {
-public:
-	static void convert( std::string const &value );
-private:
-	ScalarConverter();
-	ScalarConverter(std::string const &value);
-	ScalarConverter(ScalarConverter const &src);
-	~ScalarConverter();
+class Base { public: virtual ~Base() {} };
 
-	ScalarConverter &operator=(ScalarConverter const &rhs);
-};
+class A : public Base {};
+
+class B : public Base {};
+
+class C : public Base {};
+
+class Unknown : public Base {};
+
+Base *generate(void);
+void identify(Base *p);
+void identify(Base &p);
+

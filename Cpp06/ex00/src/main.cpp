@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScalarConverter.hpp                                :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 16:29:07 by segfault          #+#    #+#             */
-/*   Updated: 2024/03/18 11:23:16 by eseferi          ###   ########.fr       */
+/*   Created: 2024/03/18 10:38:13 by eseferi           #+#    #+#             */
+/*   Updated: 2024/03/18 10:38:26 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#include "ScalarConverter.hpp"
+#include "defines.h"
 
-#include <iostream>
-#include <string>
-#include <cstdlib>
-
-class ScalarConverter {
-public:
-	static void convert( std::string const &value );
-private:
-	ScalarConverter();
-	ScalarConverter(std::string const &value);
-	ScalarConverter(ScalarConverter const &src);
-	~ScalarConverter();
-
-	ScalarConverter &operator=(ScalarConverter const &rhs);
-};
+int main( int ac, char **av ) {
+    if (ac != 2) {
+        std::cout << RED << "Usage: ./convert [value]" << RESET << std::endl;
+        return 1;
+    }
+    ScalarConverter::convert(av[1]);
+    return 0;
+}

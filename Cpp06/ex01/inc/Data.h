@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScalarConverter.hpp                                :+:      :+:    :+:   */
+/*   Data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 16:29:07 by segfault          #+#    #+#             */
-/*   Updated: 2024/03/18 11:23:16 by eseferi          ###   ########.fr       */
+/*   Created: 2024/03/18 11:30:40 by eseferi           #+#    #+#             */
+/*   Updated: 2024/03/18 11:43:06 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#ifndef DATA_H
+# define DATA_H
 
 #include <iostream>
 #include <string>
-#include <cstdlib>
 
-class ScalarConverter {
-public:
-	static void convert( std::string const &value );
-private:
-	ScalarConverter();
-	ScalarConverter(std::string const &value);
-	ScalarConverter(ScalarConverter const &src);
-	~ScalarConverter();
+typedef struct Data {
+    int id;
+    std::string name;
+    double value;
+    // Constructor
+    Data(int _id, const std::string &_name, double _value);
+    Data();
+} Data;
 
-	ScalarConverter &operator=(ScalarConverter const &rhs);
-};
+#endif

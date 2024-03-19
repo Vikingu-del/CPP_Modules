@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScalarConverter.hpp                                :+:      :+:    :+:   */
+/*   Serializer.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 16:29:07 by segfault          #+#    #+#             */
-/*   Updated: 2024/03/18 11:23:16 by eseferi          ###   ########.fr       */
+/*   Created: 2024/03/18 11:27:41 by eseferi           #+#    #+#             */
+/*   Updated: 2024/03/18 12:09:28 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 
 #include <iostream>
 #include <string>
-#include <cstdlib>
+#include "Data.h"
+#include <sstream>
 
-class ScalarConverter {
+typedef unsigned long uintptr_t;
+
+class Serializer {
 public:
-	static void convert( std::string const &value );
+    static uintptr_t serialize( Data* ptr );
+    static Data* deserialize( uintptr_t raw );
 private:
-	ScalarConverter();
-	ScalarConverter(std::string const &value);
-	ScalarConverter(ScalarConverter const &src);
-	~ScalarConverter();
-
-	ScalarConverter &operator=(ScalarConverter const &rhs);
+    Serializer();
+    Serializer( Serializer const &src );
+    ~Serializer();
+    Serializer &operator=( Serializer const &rhs );
 };

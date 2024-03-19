@@ -5,12 +5,12 @@
 #                                                     +:+ +:+         +:+      #
 #    By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/03/16 16:04:45 by segfault          #+#    #+#              #
-#    Updated: 2024/03/18 11:02:32 by eseferi          ###   ########.fr        #
+#    Created: 2024/03/18 11:27:07 by eseferi           #+#    #+#              #
+#    Updated: 2024/03/18 11:27:26 by eseferi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = convert
+NAME = serialize
 COMP = c++
 FLAGS = -Wall -Wextra -Werror -I$(INCL) -Wshadow  -Wno-shadow -std=c++98 -g
 SRC = $(wildcard src/*.cpp)

@@ -1,10 +1,10 @@
 #include "btc.hpp"
+#include <iomanip>
 
-void	compare(std::string &date, float value, std::map<std::string, float>& dbCsv) {
+void	compare(std::string &date, double value, std::map<std::string, double>& dbCsv) {
     struct tm tm;  // Initialize tm to zero
     if (!checkDate(tm, date))
         return ;
-    std::map<std::string, float>::iterator key = dbCsv.find(date);
     if (value < 0) {
         std::cout << "Error: not a positive number." << std::endl;
         return ;
@@ -13,20 +13,21 @@ void	compare(std::string &date, float value, std::map<std::string, float>& dbCsv
         std::cout << "Error: too large a number." << std::endl;
         return ;
     }
+    std::map<std::string, double>::iterator key = dbCsv.find(date);
     if (key != dbCsv.end())
-        std::cout << date << " => " << value << " = " << value * key->second << std::endl;
+        std::cout << date << " => " << value << " = " << value * key->second << std::endl; // add << std::fixed << std::setprecision(2) for more precission
     else {
         key = dbCsv.upper_bound(date);
         if (key != dbCsv.begin()) {
             --key;  // Go to the previous key
-            std::cout << date << " => " << value << " = " << value * key->second << std::endl;
+            std::cout << date << " => " << value << " = " << value * key->second << std::endl; // add << std::fixed << std::setprecision(2) << 
         }
         else
             std::cout << "Error: bad input => " << date << std::endl;
     }
 }
 
-bool parseDbCsv(std::ifstream& ifs_csv, std::map<std::string, float>& dbCsv) {
+bool parseDbCsv(std::ifstream& ifs_csv, std::map<std::string, double>& dbCsv) {
     std::string line;
     bool isFirstLine = true;
     while (std::getline(ifs_csv, line)) {
@@ -48,15 +49,13 @@ bool parseDbCsv(std::ifstream& ifs_csv, std::map<std::string, float>& dbCsv) {
             std::cerr << "Error in Csv_database!" << std::endl;
             return false;
         }
-        std::istringstream iss(valueStr);
-        float value;
-        iss >> value;
+        double value = atof(valueStr.c_str());
         dbCsv.insert(make_pair(date, value));
     }
     return true;
 }
 
-bool parse(char **argv, std::map<std::string, float>& dbCsv) {
+bool parse(char **argv, std::map<std::string, double>& dbCsv) {
 	std::ifstream ifs(argv[1]);
 	if (!ifs.is_open()) {
 		std::cerr << "Couldn't open file: " << argv[1] << std::endl;
@@ -87,9 +86,7 @@ bool parse(char **argv, std::map<std::string, float>& dbCsv) {
         size_t pos = line.find('|');
         std::string date = line.substr(0, pos);
         std::string valueStr = line.substr(pos + 1);
-        std::istringstream iss(valueStr);
-        float value;
-        iss >> value;
+        double value = atof(valueStr.c_str());
         compare(date, value, dbCsv);
     }
 	return true;

@@ -1,10 +1,10 @@
 #include "btc.hpp"
 
-void	compare(std::string &date, float value, std::multimap<std::string, float>& dbCsv) {
+void	compare(std::string &date, float value, std::map<std::string, float>& dbCsv) {
     struct tm tm;  // Initialize tm to zero
     if (!checkDate(tm, date))
         return ;
-    std::multimap<std::string, float>::iterator key = dbCsv.find(date);
+    std::map<std::string, float>::iterator key = dbCsv.find(date);
     if (value < 0) {
         std::cout << "Error: not a positive number." << std::endl;
         return ;
@@ -26,7 +26,7 @@ void	compare(std::string &date, float value, std::multimap<std::string, float>& 
     }
 }
 
-bool parseDbCsv(std::ifstream& ifs_csv, std::multimap<std::string, float>& dbCsv) {
+bool parseDbCsv(std::ifstream& ifs_csv, std::map<std::string, float>& dbCsv) {
     std::string line;
     bool isFirstLine = true;
     while (std::getline(ifs_csv, line)) {
@@ -56,7 +56,7 @@ bool parseDbCsv(std::ifstream& ifs_csv, std::multimap<std::string, float>& dbCsv
     return true;
 }
 
-bool parse(char **argv, std::multimap<std::string, float>& dbCsv) {
+bool parse(char **argv, std::map<std::string, float>& dbCsv) {
 	std::ifstream ifs(argv[1]);
 	if (!ifs.is_open()) {
 		std::cerr << "Couldn't open file: " << argv[1] << std::endl;

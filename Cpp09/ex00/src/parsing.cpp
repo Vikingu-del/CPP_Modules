@@ -80,7 +80,7 @@ bool parse(char **argv, std::map<std::string, float>& dbCsv) {
             isFirstLine = false;
             continue;
         }
-        if (std::count(line.begin(), line.end(), '|') != 1) {
+        if (std::count(line.begin(), line.end(), '|') > 1) {
             std::cerr << "Error: There should be only one '|' character for deviding date and value" << std::endl;
             return false;
         }

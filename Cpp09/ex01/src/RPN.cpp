@@ -6,22 +6,11 @@
 /*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 08:14:29 by eseferi           #+#    #+#             */
-/*   Updated: 2024/03/26 10:46:01 by eseferi          ###   ########.fr       */
+/*   Updated: 2024/03/26 11:35:55 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "RPN.hpp"
-
-RPN::RPN() {}
-RPN::RPN(const RPN& src) : _expression(src._expression), _numStack(src._numStack) {}
-RPN::~RPN() {}
-RPN& RPN::operator=(const RPN& src) {
-	if (this != &src) {
-		this->_expression = src._expression;
-		this->_numStack = src._numStack;
-	}
-	return *this;
-}
 
 RPN::RPN(std::string& str) : _expression(str) {
 	try {

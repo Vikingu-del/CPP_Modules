@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:02:39 by eseferi           #+#    #+#             */
-/*   Updated: 2024/03/25 17:51:52 by eseferi          ###   ########.fr       */
+/*   Updated: 2024/03/26 11:30:39 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 
 /* utils.cpp */
 std::string removeWhitespace(const std::string& str);
-bool	checkDate(struct tm& tm, const std::string& date);
+bool	    checkDate(struct tm& tm, const std::string& date);
 
 /* parsing.cpp */
-bool parseDbCsv(std::ifstream& ifs_csv, std::map<std::string, double>& dbCsv);
-bool parse(char **argv, std::map<std::string, double>& dbCsv);
+bool        parseDbCsv(std::ifstream& ifs_csv, std::map<std::string, double>& dbCsv);
+bool        parse(char **argv, std::map<std::string, double>& dbCsv);

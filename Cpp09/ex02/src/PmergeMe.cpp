@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:37:02 by eseferi           #+#    #+#             */
-/*   Updated: 2024/03/27 00:11:19 by eseferi          ###   ########.fr       */
+/*   Updated: 2024/03/27 00:39:48 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,23 @@ PmergeMe::PmergeMe(const std::string& str) : _numbers(str) {
 }
 
 void PmergeMe::parse() {
-    if (this->_numbers.find_first_not_of("0123456789+ ") != std::string::npos)
-        throw std::runtime_error("here Error!");
+    if (this->_numbers.find_first_not_of("0123456789 ") != std::string::npos) throw std::runtime_error("Error!");
     std::istringstream iss(this->_numbers);
     std::string num;
-    while (iss >> num) { this->_numDeq.push_back(atoi(num.c_str())); }
-	if (this->_numDeq.size() == 0)
-		throw std::runtime_error("Error!");
+    while (iss >> num) {
+		unsigned long long int parsedNum = strtoull(num.c_str(), NULL, 10);
+		if (parsedNum == ULLONG_MAX && num != "18446744073709551615")
+			throw std::runtime_error("Error: Number out of range!");
+		this->_numDeq.push_back(parsedNum); 
+	}
+	if (this->_numDeq.size() == 0) throw std::runtime_error("Error!");
+	if (!this->checkDups()) throw std::runtime_error("Error: Duplicates!");
+	if (std::count(this->_numDeq.begin(), this->_numDeq.end(), 0)) throw std::runtime_error("Error: Only numbers above 0!");
 	if (this->_numDeq.size() == 1) {
 		std::ostringstream oss;
 		oss << *_numDeq.begin();
 		throw std::runtime_error(oss.str());
 	}
-	if (!this->checkDups())
-		throw std::runtime_error("Error: Duplicates!");
-	if (std::count(this->_numDeq.begin(), this->_numDeq.end(), 0))
-		throw std::runtime_error("Error: Only numbers above 0!");
 	std::cout << std::endl << "Before: ";
 	this->printDeq(this->_numDeq);
 }
@@ -126,7 +127,7 @@ void	PmergeMe::merge(int start, int mid, int end) {
 		this->_numVec[k++] = right[j++];
 }
 
-// stands for Ford-Johnson
+// stands for Ford-Johnson-merge-insert sort
 void PmergeMe::FJMIsort() {
 	clock_t start = clock();
 	unsigned long long int store = 0;

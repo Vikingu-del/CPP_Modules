@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:13:31 by eseferi           #+#    #+#             */
-/*   Updated: 2024/03/27 00:02:17 by eseferi          ###   ########.fr       */
+/*   Updated: 2024/03/27 00:40:08 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <string>
 #include <sstream>
 #include "defines.h"
+#include  <climits> 
 
 #define DEBUG 1
 

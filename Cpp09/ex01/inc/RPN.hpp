@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 08:42:40 by eseferi           #+#    #+#             */
-/*   Updated: 2024/03/26 09:12:36 by eseferi          ###   ########.fr       */
+/*   Updated: 2024/03/26 10:12:48 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ public:
     void evaluate(std::string &expression);
     void printStack();
     bool performOperation(char &c);
+    bool containsOnlyAllowedChars(const std::string & str);
 private:
     RPN(const RPN& src);
     RPN& operator=(const RPN& src);
     std::string _expression;
-    std::stack<int> _numStack;
+    std::stack<unsigned long long int> _numStack;
 };
 
-bool containsOnlyAllowedChars(const std::string & str);

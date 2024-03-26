@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 08:14:29 by eseferi           #+#    #+#             */
-/*   Updated: 2024/03/26 09:25:52 by eseferi          ###   ########.fr       */
+/*   Updated: 2024/03/26 10:22:25 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ RPN::RPN(std::string& str) : _expression(str) {
         this->evaluate(this->_expression);
     }
     catch (std::runtime_error &e) {
-        std::cerr << "From evaluation: " << e.what() << std::endl;
+        std::cerr << e.what() << std::endl;
     }
 }
 
 void RPN::printStack() {
-    std::stack<int> copy = _numStack;
+    std::stack<unsigned long long int> copy = _numStack;
     while (!copy.empty()) {
         std::cout << copy.top() << " ";
         copy.pop();
@@ -42,11 +42,22 @@ void RPN::printStack() {
 }
 
 void RPN::evaluate(std::string &expression) {
+    if (!this->containsOnlyAllowedChars(expression)) {
+        throw (std::runtime_error("Error!"));
+        return ;
+    }
+    int countNumbers = 0;
     std::stringstream ss(expression);
     std::string token;
     while (std::getline(ss, token, ' ')) {
-        if (isdigit(token[0]))
+        if (isdigit(token[0])) {
+            countNumbers++;
+            if (countNumbers > 10) {
+                throw (std::runtime_error("Error!"));
+                return ;
+            }
             this->_numStack.push(atoi(token.c_str()));
+        }
         else if (token.size() == 1 && std::string("+-*/").find(token) != std::string::npos) {
             if (!this->performOperation(token[0]))
                 throw (std::runtime_error("Error!"));   
@@ -62,9 +73,9 @@ void RPN::evaluate(std::string &expression) {
 bool RPN::performOperation(char &c) {
     if (this->_numStack.size() < 2)
         return false;
-    int a = this->_numStack.top();
+    unsigned long long int a = this->_numStack.top();
     this->_numStack.pop();
-    int b = this->_numStack.top();
+    unsigned long long int b = this->_numStack.top();
     this->_numStack.pop();
     switch (c) {
         case '+': _numStack.push(a + b); break;
@@ -80,7 +91,7 @@ bool RPN::performOperation(char &c) {
     return true;
 }
 
-bool containsOnlyAllowedChars(const std::string & str) {
+bool RPN::containsOnlyAllowedChars(const std::string & str) {
     std::string allowedChars = "0123456789+-/* ";
     for (std::string::const_iterator i = str.begin(); i != str.end(); i++) {
         char c = *i;

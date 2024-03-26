@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 20:13:56 by segfault          #+#    #+#             */
-/*   Updated: 2024/03/26 08:52:00 by eseferi          ###   ########.fr       */
+/*   Updated: 2024/03/26 10:14:30 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int main(int argc, char **argv) {
         return 1;
     }
     std::string expression = argv[1];
-    if (!containsOnlyAllowedChars(expression))
-        return 1;
     RPN rpn(expression);
     return 0;
 }

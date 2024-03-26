@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 08:14:29 by eseferi           #+#    #+#             */
-/*   Updated: 2024/03/26 10:34:13 by eseferi          ###   ########.fr       */
+/*   Updated: 2024/03/26 10:43:35 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ RPN::RPN(std::string& str) : _expression(str) {
 
 void	RPN::printStack() {
 	std::stack<unsigned long long int> copy = _numStack;
+	std::cout << "numStack: ";
 	while (!copy.empty()) {
 		std::cout << copy.top() << " ";
 		copy.pop();
@@ -48,6 +49,7 @@ void	RPN::evaluate(std::string &expression) {
 	std::stringstream ss(expression);
 	std::string token;
 	while (std::getline(ss, token, ' ')) {
+		// this->printStack();
 		if (isdigit(token[0])) {
 			countNumbers++;
 			if (countNumbers > 10)

@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:13:31 by eseferi           #+#    #+#             */
-/*   Updated: 2024/03/27 00:40:08 by eseferi          ###   ########.fr       */
+/*   Updated: 2024/03/27 17:03:15 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,29 @@
 #include "defines.h"
 #include  <climits> 
 
-#define DEBUG 1
+#ifndef DEBUG
+#define DEBUG 0
+#endif
 
 class PmergeMe {
 public:
     PmergeMe() {};
     ~PmergeMe() {};
     PmergeMe(const std::string& str);
+    // parsing
     void parse();
+    bool checkDups();
+    // Ford-Johnson merge-insert
     void FJMIsort();
     // merge sort
     void mergeSort();
     void mergeSBLV(int start, int end);
     void merge(int start, int mid, int end);
     // insert sort
+    void insertSort();
+    // debuggers
     void printDeq(std::deque<unsigned long long int>& deq);
     void printVec();
-    bool checkDups();
 private:
     PmergeMe& operator=(const PmergeMe& src) { (void) src; return *this; };
     PmergeMe(const PmergeMe& src) { (void) src; };
@@ -46,5 +52,6 @@ private:
     std::deque<unsigned long long int> _sortedDeq;
     std::deque<unsigned long long int> _unsortedDeq;
     double _mergeTime;
-    // double _insertTime;
+    double _insertTime;
+    int _firstDeqSize;
 };

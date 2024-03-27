@@ -6,7 +6,7 @@
 #    By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/26 10:27:24 by eseferi           #+#    #+#              #
-#    Updated: 2024/03/26 10:27:54 by eseferi          ###   ########.fr        #
+#    Updated: 2024/03/27 16:52:42 by eseferi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,8 @@ fclean: clean
 			echo "$(YELLOW)No executable file to clean$(RESET)"; \
 		fi
 
+debug: 
+	$(MAKE) FLAGS="$(FLAGS) -DDEBUG=1" all
 
 re: fclean all
 

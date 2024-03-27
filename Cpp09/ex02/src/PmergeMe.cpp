@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 11:37:02 by eseferi           #+#    #+#             */
-/*   Updated: 2024/03/27 00:39:48 by eseferi          ###   ########.fr       */
+/*   Updated: 2024/03/27 17:08:28 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ void PmergeMe::parse() {
 		oss << *_numDeq.begin();
 		throw std::runtime_error(oss.str());
 	}
-	std::cout << std::endl << "Before: ";
-	this->printDeq(this->_numDeq);
+	std::cout << RED << "Before: "; this->printDeq(this->_numDeq); std::cout << RESET;
 }
 
 void PmergeMe::printDeq(std::deque<unsigned long long int>& deq) {
@@ -87,12 +86,14 @@ void	PmergeMe::mergeSort() {
 		this->_unsortedDeq.push_back(it->first);
 	}
 	if (DEBUG) {
-		std::cout << CYAN << std::endl << "After the merge sort ";
+		std::cout << std::endl << "After the merge sort " << std::endl;
+		std::cout << CYAN << "Sorted sequence: ";
 		this->printDeq(this->_sortedDeq);
-		std::cout << RED << "Unsorted sequence left: ";
+		std::cout << RED << "Unsorted sequence: ";
 		this->printDeq(this->_unsortedDeq);
 		std::cout << RESET;
 	}
+	this->_firstDeqSize = this->_sortedDeq.size();
 }
 
 // SBLV stands for Sort By Longest Value which are (for each element of pair in vector) it -> it->second
@@ -127,9 +128,26 @@ void	PmergeMe::merge(int start, int mid, int end) {
 		this->_numVec[k++] = right[j++];
 }
 
+void PmergeMe::insertSort() {
+	for (unsigned long long int i = 0; i < this->_unsortedDeq.size(); ++i) {
+		std::deque<unsigned long long int>::iterator pos;
+		pos = std::lower_bound(this->_sortedDeq.begin(), this->_sortedDeq.end(), this->_unsortedDeq[i]);
+		if (DEBUG) {
+			std::cout << CYAN << "to sort " << this->_unsortedDeq[i] << " before the number: " << *pos << RESET << std::endl;
+		}
+		this->_sortedDeq.insert(pos, this->_unsortedDeq[i]);
+		if (DEBUG) {
+			std::cout << PURPLE; printDeq(this->_sortedDeq); std::cout << RESET;
+		}
+	}
+	if (*(this->_sortedDeq.begin()) == 0 )
+		this->_sortedDeq.pop_front();
+}
+
+
 // stands for Ford-Johnson-merge-insert sort
-void PmergeMe::FJMIsort() {
-	clock_t start = clock();
+void	PmergeMe::FJMIsort() {
+	clock_t mergeStart = clock();
 	unsigned long long int store = 0;
 	if (this->_numDeq.size() % 2 != 0) {
 		store = this->_numDeq.back();
@@ -144,6 +162,13 @@ void PmergeMe::FJMIsort() {
 		std::cout << std::endl << "stored value: " << store << std::endl;
 	}
 	this->mergeSort();
-	clock_t end = clock();
-	this->_mergeTime = static_cast<double>(end - start) / CLOCKS_PER_SEC;
+	clock_t mergeEnd = clock();
+	this->_mergeTime = static_cast<double>(mergeEnd - mergeStart) / CLOCKS_PER_SEC;
+	clock_t insertStart = clock();
+	this->insertSort();
+	clock_t insertEnd = clock();
+	this->_insertTime = static_cast<double>(insertEnd - insertStart) / CLOCKS_PER_SEC;
+	std::cout << GREEN << "After: "; this->printDeq(this->_sortedDeq);
+	std::cout << CYAN << "Time to process a range of " << this->_numVec.size() << " elements with std::vector<usnigned lon lon int, unsinge long long int>: "  << this->_mergeTime << "us." << std::endl;
+	std::cout << PURPLE << "Time to process a range of " << this->_unsortedDeq.size() << " elements with std::deque<usnigned>: "  << this->_insertTime << "us." << std::endl;
 }

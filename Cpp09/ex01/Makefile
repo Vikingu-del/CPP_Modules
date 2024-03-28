@@ -6,7 +6,7 @@
 #    By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/26 08:50:31 by eseferi           #+#    #+#              #
-#    Updated: 2024/03/26 08:50:37 by eseferi          ###   ########.fr        #
+#    Updated: 2024/03/28 17:30:31 by eseferi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,5 +49,8 @@ fclean: clean
 
 
 re: fclean all
+
+debug: 
+	$(MAKE) FLAGS="$(FLAGS) -DDEBUG=1" all
 
 .PHONY: all clean fclean re%     

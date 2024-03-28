@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 08:14:29 by eseferi           #+#    #+#             */
-/*   Updated: 2024/03/26 11:35:55 by eseferi          ###   ########.fr       */
+/*   Updated: 2024/03/28 17:41:34 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,19 @@ void	RPN::printStack() {
 }
 
 void	RPN::evaluate(std::string &expression) {
-	if (!this->containsOnlyAllowedChars(expression))
+	if (expression.find_first_not_of("0123456789+-/* ") != std::string::npos)
 		throw (std::runtime_error("Error!"));
 	int countNumbers = 0;
 	std::stringstream ss(expression);
 	std::string token;
 	while (std::getline(ss, token, ' ')) {
-		// this->printStack();
+		if (DEBUG)
+			this->printStack();
 		if (isdigit(token[0])) {
 			countNumbers++;
 			if (countNumbers > 10)
+				throw (std::runtime_error("Error!"));
+			if (token.find_first_not_of("0123456789") != std::string::npos)
 				throw (std::runtime_error("Error!"));
 			this->_numStack.push(atoi(token.c_str()));
 		}
@@ -65,25 +68,15 @@ bool	RPN::performOperation(char &c) {
 	unsigned long long int b = this->_numStack.top();
 	this->_numStack.pop();
 	switch (c) {
-		case '+': _numStack.push(a + b); break;
-		case '-': _numStack.push(a - b); break;
-		case '*': _numStack.push(a * b); break;
+		case '+': _numStack.push(b + a); break;
+		case '-': _numStack.push(b - a); break;
+		case '*': _numStack.push(b * a); break;
 		case '/':
-			if (b == 0)
+			if (a == 0)
 				return false;
 			else
-				_numStack.push(a / b);
+				_numStack.push(b / a);
 			break;
-	}
-	return true;
-}
-
-bool	RPN::containsOnlyAllowedChars(const std::string & str) {
-	std::string allowedChars = "0123456789+-/* ";
-	for (std::string::const_iterator i = str.begin(); i != str.end(); i++) {
-		char c = *i;
-		if (allowedChars.find(c) == std::string::npos)
-			return false;
 	}
 	return true;
 }

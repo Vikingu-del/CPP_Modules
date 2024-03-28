@@ -6,7 +6,7 @@
 /*   By: eseferi <eseferi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:31:25 by eseferi           #+#    #+#             */
-/*   Updated: 2024/03/28 16:29:27 by eseferi          ###   ########.fr       */
+/*   Updated: 2024/03/28 17:25:30 by eseferi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ void BitcoinExchange::parse() {
     double value;
     while (std::getline(ifs, line)) {
         line = removeWhitespace(line);
+        if (count(line.begin(), line.end(), '|') > 1 || line.find_first_not_of("0123456789-|") != std::string::npos) {
+            std::cout << "Error: bad input" << std::endl;
+            continue;
+        }
         std::stringstream ss(line);
         std::getline(ss, date, '|');
         std::string valueStr;
